@@ -14,14 +14,14 @@ TagRAM bao gồm 4 khối block ram có độ rộng dữ liệu mỗi khối l�
 ## Ví dụ cache với bộ nhớ chính là DDR3 của chíp FPGA SoC XC7Z020clg400.
 Đối với chính SoC FPGA đó bộ nhớ DDR3 được quản lý bằng core ARM(PS) trên board. Mọi hoạt động đọc ghi DDR3 đều phải thông qua core PS này. Trong dự án này Icache giao tiếp với PS bằng bus AXI4 full với kết nối như sau:
 <p align="center">
-  <img src="Image/Blockdesign.png" alt="SoC Architecture" width="500">
+  <img src="Image/Blockdesign.png" alt="SoC Architecture" width="800">
   <br>
   <i>Hình 1: Block Design giao tiếp DDR3 board SoC XC7Z020clg400</i>
 </p>
 
 ## Mô phỏng
 <p align="center">
-  <img src="Image/sim.png" alt="SoC Architecture" width="500">
+  <img src="Image/sim.png" alt="SoC Architecture" width="800">
   <br>
   <i>Hình 2: Hình ảnh mô phỏng cacheHIT và cache MISS</i>
 </p>
