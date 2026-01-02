@@ -19,6 +19,11 @@ TagRAM bao gồm 4 khối block ram có độ rộng dữ liệu mỗi khối l�
   <i>Hình 1: Block Design giao tiếp DDR3 board SoC XC7Z020clg400</i>
 </p>
 
+- Trong khối trên processing_system7_0 là bộ xử lý ARM Cortex-A9 trong Zynq. Nó sở hữu bộ điều khiển DDR3, các cổng AXI của PS (GP / HP / ACP...). PS quản lý DDR3 vật lý và cung cấp các cổng AXI để truy cập/mapping DDR vào PL. Nói cách khác PS chính là người quản lý của DDR3, PL muốn đọc ghi DDR3 thì phải thông qua PS. Trong sơ đồ khối trên bus hiệu suất cao AXI của ps được nối với bus M00_AXI của AXI interconnect và được điều khiển bằng bus m_axi. Bus m_axi thực chất là một bó dây được kết nối với module Verilog trong bộ quản lý cache. Nói cách khác mỗi khi bộ quản lý cache cần truy cập DDR3 nó sẽ gửi yêu cầu thông quan bus m_axi và tới S_AXI_HP0 của PS, PS thực hiện đọc DDR3 và gửi dữ liệu trở lại cho bộ quản lý cache.
+- Processor system reset là một bộ quản lý reset nhận vào clock và yêu cầu reset, đưa ra tín hiệu reset đồng bộ cho toàn bộ hệ thống. Tín hiệu này cũng được nối ra một port để cung cấp reset cho toàn bộ thiết kế CPU bên PL tức FPGA. Điều này giúp 2 miền PL và PS đồng bộ reset với nhau tránh nhiều vấn đề phát sinh.
+- Khối System ILA là một khối IP có sẵn cung cấp chức năng quan sát tín hiệu thực tế trong quá trình hoạt động. Ở đây nó được kết nối tới bus m_axi để quan sát quá trình đọc DDR3.
+- Khối Slide mục đích chỉ để lấy bit cuối của GPIO_0 out – một tín hiệu điều khiển gửi cho CPU biết cache đã được khởi tạo xong chưa. Mục đích chính của việc này để chờ DDR3 được ghi mã lệnh trược rồi mới cho CPU hoạt động tránh đọc giá trị rác.
+
 ## Mô phỏng
 <p align="center">
   <img src="Image/sim.png" alt="SoC Architecture" width="800">
